@@ -1,3 +1,6 @@
+#ifndef VENDING_MACHINE_H_
+#define VENDING_MACHINE_H_
+
 _Task VendingMachine {
     void main();
   public:
@@ -11,3 +14,5 @@ _Task VendingMachine {
     _Nomutex unsigned int cost();
     _Nomutex unsigned int getId();
 };
+
+#endif //VENDING_MACHINE_H_

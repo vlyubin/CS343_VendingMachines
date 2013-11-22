@@ -1,3 +1,6 @@
+#ifndef NAME_SERVER_H_
+#define NAME_SERVER_H_
+
 _Task NameServer {
     void main();
   public:
@@ -6,3 +9,5 @@ _Task NameServer {
     VendingMachine *getMachine( unsigned int id );
     VendingMachine **getMachineList();
 };
+
+#endif // NAME_SERVER_H_
