@@ -10,7 +10,7 @@ using namespace std;
 #define DELIMITER "*******"
 #define FINAL_DELIMITER "***********************"
 #define COMMA ','
-#define INFINITY 2000000000
+#define NEG_INFINITY -2000000000
 #define PARENT "Parent"
 #define WATCARD_OFFICE "WATOff"
 #define NAME_SERVER "Names"
@@ -19,10 +19,12 @@ using namespace std;
 #define STUDENT "Stud"
 #define VENDING_MACHINE "Mach"
 #define COURIER "Cour"
+#define NUM_SINGLE_ACTORS 5
+#define FINISHED 'F'
 
 Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers) :
     numStudents(numStudents), numVendingMachines(numVendingMachines), numCouriers(numCouriers),
-    numActors(5 + numStudents + numVendingMachines + numCouriers), numTerminated(0) {
+    numActors(NUM_SINGLE_ACTORS + numStudents + numVendingMachines + numCouriers), numTerminated(0) {
   // Print the column headings
   cout << PARENT << TAB << WATCARD_OFFICE << TAB << NAME_SERVER << TAB << TRUCK << TAB << PLANT;
   for (unsigned int i = 0; i < numStudents; i++) {
@@ -43,35 +45,88 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
   cout << endl;
 }
 
-void Printer::print(Kind kind, char state) {
+unsigned int Printer::convertToGlobalId(Kind kind, unsigned int lid) {
+  switch (kind) {
+    case Student:
+      return NUM_SINGLE_ACTORS + lid;
+    case Vending:
+      return NUM_SINGLE_ACTORS + numStudents + lid;
+    case Courier:
+      return NUM_SINGLE_ACTORS + numStudents + numVendingMachines + lid;
+    default: // Kind represents one of single actors (parent, truck, etc.), so just use
+             // its enum value
+      return kind;
+  }
+}
 
+void Printer::print(Kind kind, char state) {
+  print(kind, 0, state, NEG_INFINITY, NEG_INFINITY);
 }
 
 void Printer::print(Kind kind, char state, int value1) {
-
+  print(kind, 0, state, value1, NEG_INFINITY);
 }
 
 void Printer::print(Kind kind, char state, int value1, int value2) {
-
+  print(kind, 0, state, value1, value2);
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state) {
-
+  print(kind, lid, state, NEG_INFINITY, NEG_INFINITY);
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1) {
-
+  print(kind, lid, state, value1, NEG_INFINITY);
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1, int value2) {
+  unsigned int id = convertToGlobalId(kind, lid);
 
+  // Handle display of state as finished
+  if (state == FINISHED) {
+    // If buffer is non-empty, display it's content and clear them
+    if (buffer.size()) {
+      displayStates();
+      buffer.clear();
+    }
+    // Display state of id as finished using sspecial function
+    displayFinishedState(id);
+    return;
+  }
+
+  if (buffer.find(id) != buffer.end()) {
+    // Some state will be owerriten. Flush the buffer.
+    displayStates();
+  }
+  buffer[id] = state; // Save the new value in the buffer
+  extraValues[id] = make_pair(value1, value2);
 }
 
 void Printer::displayStates() {
-  // TODO
+  unsigned int previousId = 0;
+  for (map<unsigned int, char>::iterator it = buffer.begin(); it != buffer.end(); ++it) {
+    // Print the tabs preceeding the status
+    for (size_t i = 0; i < it->first - previousId; i++) {
+      cout << TAB;
+    }
+    previousId = it->first;
+    cout << it->second;
+
+    if (extraValues[it->first].first != NEG_INFINITY) {
+      // If the id we are printing has an extra value, print it 
+      cout << extraValues[it->first].first;
+    }
+    if (extraValues[it->first].second != NEG_INFINITY) {
+      // If the id we are printing has a second extra value, print it as well
+      cout << COMMA << extraValues[it->first].second;
+    }
+  }
+  cout << endl;
+
+  buffer.clear(); // Flush the buffer after printing
 }
 
-void Printer::displayFinishedState(int finishedId) {
+void Printer::displayFinishedState(unsigned int finishedId) {
   numTerminated++;
   for (unsigned int i = 0; i < numActors; i++) {
     if (i) { // Print the tab for every entry, but first
