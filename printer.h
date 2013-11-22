@@ -33,4 +33,4 @@ _Monitor Printer {
     void displayFinishedState(int finishedId);
 };
 
-#endif
+#endif //PRINTER_H_

@@ -1,3 +1,6 @@
+#ifndef BOTTLING_PLANT_H_
+#define BOTTLING_PLANT_H_
+
 _Task BottlingPlant {
     void main();
   public:
@@ -6,3 +9,5 @@ _Task BottlingPlant {
                  unsigned int timeBetweenShipments);
     bool getShipment(unsigned int cargo[]);
 };
+
+#endif // BOTTLING_PLANT_H_

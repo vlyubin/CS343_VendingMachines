@@ -1,3 +1,6 @@
+#ifndef CONFIG_H_
+#define CONFIG_H_
+
 struct ConfigParms {
     unsigned int sodaCost;                 // MSRP per bottle
     unsigned int numStudents;              // number of students to create
@@ -11,3 +14,5 @@ struct ConfigParms {
 };
 
 void processConfigFile(const char *configFile, ConfigParms &cparms);
+
+#endif //CONFIG_H_
