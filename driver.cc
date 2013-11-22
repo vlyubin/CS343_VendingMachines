@@ -1,8 +1,9 @@
 #include <iostream>
 #include <vector>
-#include <time.h>
+#include <unistd.h>
 
 #include "config.h"
+#include "printer.h"
 #include "MPRNG.h"
 
 using namespace std;
@@ -38,11 +39,19 @@ void uMain::main() {
   char* configFile = argc <= 1 ? DEFAULT_CONFIG_FILE : argv[1];
   processConfigFile(configFile, configs);
 
-  int seed = argc <= 2 ? time(NULL) : readArgvNumber(argv, 2);
+  int seed = argc <= 2 ? getpid() : readArgvNumber(argv, 2);
 
   // Uncomment to use more processors if there is a need.
   // uProcessor p[16] __attribute__((  ));
 
   // Set the random seed
   randGen.seed(seed);
+
+  // Creation of objects starts here
+  Printer *printer = new Printer(configs.numStudents, configs.numVendingMachines, configs.numCouriers);
+  // Creation of objects ends here
+
+  // Deletion of objects starts here
+  delete printer;
+  // Deletion of objects ends here
 } // uMain::main
