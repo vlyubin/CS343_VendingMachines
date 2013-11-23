@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Useful constants
 #define TAB '\t'
 #define FINISHED_ME "F"
 #define FINISHED_OTHER "..."
@@ -60,23 +61,23 @@ unsigned int Printer::convertToGlobalId(Kind kind, unsigned int lid) {
 }
 
 void Printer::print(Kind kind, char state) {
-  print(kind, 0, state, NEG_INFINITY, NEG_INFINITY);
+  print(kind, 0, state, NEG_INFINITY, NEG_INFINITY); // Call more general version of print()
 }
 
 void Printer::print(Kind kind, char state, int value1) {
-  print(kind, 0, state, value1, NEG_INFINITY);
+  print(kind, 0, state, value1, NEG_INFINITY); // Call more general version of print()
 }
 
 void Printer::print(Kind kind, char state, int value1, int value2) {
-  print(kind, 0, state, value1, value2);
+  print(kind, 0, state, value1, value2); // Call more general version of print()
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state) {
-  print(kind, lid, state, NEG_INFINITY, NEG_INFINITY);
+  print(kind, lid, state, NEG_INFINITY, NEG_INFINITY); // Call more general version of print()
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1) {
-  print(kind, lid, state, value1, NEG_INFINITY);
+  print(kind, lid, state, value1, NEG_INFINITY); // Call more general version of print()
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1, int value2) {
@@ -110,7 +111,7 @@ void Printer::displayStates() {
       cout << TAB;
     }
     previousId = it->first;
-    cout << it->second;
+    cout << it->second; // Printthe state
 
     if (extraValues[it->first].first != NEG_INFINITY) {
       // If the id we are printing has an extra value, print it 
@@ -137,7 +138,7 @@ void Printer::displayFinishedState(unsigned int finishedId) {
   }
   cout << endl;
   if (numTerminated == numActors) {
-    // If all phisolophers terminated, print termination message
-    cout << FINAL_DELIMITER << endl << "Philosophers terminated" << endl;
+    // If all actors terminated, print termination message
+    cout << FINAL_DELIMITER << endl;
   }
 }
