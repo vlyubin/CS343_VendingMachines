@@ -3,17 +3,23 @@
 
 NameServer::NameServer(Printer &prt, unsigned int numVendingMachines, unsigned int numStudents) :
     printer(prt), numVendingMachines(numVendingMachines), numStudents(numStudents) {
+  machines = new VendingMachine*[numVendingMachines];
+}
+
+NameServer::~NameServer() {
+  delete machines;
 }
 
 void NameServer::VMregister(VendingMachine *vendingmachine) {
+  machines[vendingmachine->getId()] = vendingmachine;
 }
 
 VendingMachine* NameServer::getMachine(unsigned int id) {
-  return NULL;
+  return machines[id];
 }
 
 VendingMachine** NameServer::getMachineList() {
-  return NULL;
+  return machines;
 }
 
 void NameServer::main() {

@@ -52,9 +52,23 @@ void uMain::main() {
 
   // Creation of objects starts here
   Printer *printer = new Printer(configs.numStudents, configs.numVendingMachines, configs.numCouriers);
+  NameServer *nameServer = new NameServer(*printer, configs.numVendingMachines, configs.numStudents);
+
+  vector<VendingMachine*> machines;
+  for (size_t i = 0; i < configs.numVendingMachines; i++) {
+    machines.push_back(new VendingMachine(*printer, *nameServer, i, configs.sodaCost, configs.maxStockPerFlavour));
+  }
+
+  BottlingPlant *plant = new BottlingPlant(*printer, *nameServer, configs.numVendingMachines,
+      configs.maxShippedPerFlavour, configs.maxStockPerFlavour, configs.timeBetweenShipments);
   // Creation of objects ends here
 
   // Deletion of objects starts here
+  delete plant;
+  for (size_t i = 0; i < configs.numVendingMachines; i++) {
+    delete machines[i];
+  }
+  delete nameServer;
   delete printer;
   // Deletion of objects ends here
 } // uMain::main

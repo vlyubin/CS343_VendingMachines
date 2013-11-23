@@ -25,4 +25,5 @@ _Nomutex unsigned int VendingMachine::getId() {
 }
 
 void VendingMachine::main() {
+  nameServer.VMregister(this);
 }

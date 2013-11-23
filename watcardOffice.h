@@ -2,6 +2,8 @@
 #define WATCARD_OFFICE_H_
 
 #include "watcard.h"
+#include "printer.h"
+#include "bank.h"
 
 _Monitor Bank;
 

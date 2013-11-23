@@ -2,7 +2,7 @@ CXX = u++						# compiler
 CXXFLAGS = -g -multi -Wall -Wno-unused-label -Wno-unused-local-typedefs -MMD ${OPT} -DTYPE="${TYPE}" # compiler flags
 
 OBJECTS = driver.o bank.o bottlingPlant.o config.o nameServer.o parent.o \
-          printer.o student.o truck.o vendingMachine.o watcard.o watcardOffice.o
+          printer.o truck.o vendingMachine.o student.o watcard.o watcardOffice.o
 EXECS = soda
 DEPENDS = ${OBJECTS:.o=.d}				# substitute ".o" with ".d"
 
