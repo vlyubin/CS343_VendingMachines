@@ -35,7 +35,7 @@ void Student::main() {
 				 
 				 case VendingMachine::FUNDS:
 				 	// Insufficient funds; transfer more money.
-				 	cardOffice.transfer( id, 5 + machine->cost(), watcard );
+				 	watcard = cardOffice.transfer( id, 5 + machine->cost(), watcard );
 					break;
 
 				 default:
