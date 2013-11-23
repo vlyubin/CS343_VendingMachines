@@ -1,6 +1,8 @@
 #ifndef NAME_SERVER_H_
 #define NAME_SERVER_H_
 
+_Task VendingMachine;
+
 _Task NameServer {
     void main();
   public:

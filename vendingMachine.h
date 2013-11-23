@@ -4,7 +4,7 @@
 _Task VendingMachine {
     void main();
   public:
-    enum Flavours { ... };                 // flavours of soda (YOU DEFINE)
+    enum Flavours { ORANGE, COLA, GRAPE, CHERRY }; // flavours of soda (YOU DEFINE)
     enum Status { BUY, STOCK, FUNDS };     // purchase status: successful buy, out of stock, insufficient funds
     VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
                     unsigned int maxStockPerFlavour );

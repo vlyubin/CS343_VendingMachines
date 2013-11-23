@@ -1,5 +1,6 @@
 #ifndef WATCARD_H_
 #define WATCARD_H_
+#include <uFuture.h>
 
 class WATCard {
     WATCard( const WATCard & );            // prevent copying
