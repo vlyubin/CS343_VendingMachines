@@ -5,6 +5,8 @@ _Task VendingMachine;
 #ifndef NAME_SERVER_H_
 #define NAME_SERVER_H_
 
+_Task VendingMachine;
+
 _Task NameServer {
     Printer &printer;
     unsigned int numVendingMachines, numStudents;

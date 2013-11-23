@@ -1,5 +1,5 @@
 CXX = u++						# compiler
-CXXFLAGS = -g -multi -Wall -Wno-unused-label -MMD ${OPT} -DTYPE="${TYPE}" # compiler flags
+CXXFLAGS = -g -multi -Wall -Wno-unused-label -Wno-unused-local-typedefs -MMD ${OPT} -DTYPE="${TYPE}" # compiler flags
 
 OBJECTS = driver.o bank.o bottlingPlant.o config.o nameServer.o parent.o \
           printer.o student.o truck.o vendingMachine.o watcard.o watcardOffice.o
