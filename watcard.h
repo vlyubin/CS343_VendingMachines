@@ -1,3 +1,5 @@
+#include <uFuture.h>
+
 #ifndef WATCARD_H_
 #define WATCARD_H_
 

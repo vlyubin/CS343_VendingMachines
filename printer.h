@@ -8,6 +8,12 @@ _Monitor Printer {
   public:
     enum Kind {Parent, WATCardOffice, NameServer, Truck, BottlingPlant, Student, Vending, Courier};
     Printer(unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers);
+    
+    /* All print functions are intended to change the state of the specified actor, and possibly
+     * set his extra values (if those were supplied in form of value1/value2). If the state of
+     * the actor changed, print the updated states to display.
+     */
+
     void print(Kind kind, char state);
     void print(Kind kind, char state, int value1);
     void print(Kind kind, char state, int value1, int value2);

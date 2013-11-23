@@ -4,6 +4,9 @@
 
 #include "config.h"
 #include "printer.h"
+#include "nameServer.h"
+#include "vendingMachine.h"
+#include "bottlingPlant.h"
 #include "MPRNG.h"
 
 using namespace std;
