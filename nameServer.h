@@ -11,13 +11,14 @@ _Task NameServer {
     Printer &printer;
     unsigned int numVendingMachines, numStudents;
     VendingMachine** machines;
+    enum States {Starting = 'S', RegisterVM = 'R', NewVM = 'N', Finished = 'F'};
 
     void main();
   public:
     NameServer(Printer &prt, unsigned int numVendingMachines, unsigned int numStudents);
     ~NameServer();
     void VMregister(VendingMachine *vendingmachine);
-    VendingMachine *getMachine( unsigned int id );
+    VendingMachine *getMachine(unsigned int id);
     VendingMachine **getMachineList();
 };
 

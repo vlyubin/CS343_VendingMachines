@@ -64,6 +64,10 @@ void uMain::main() {
   // Creation of objects ends here
 
   // Deletion of objects starts here
+
+  // Delete students first - the system should be ready to close down when they did
+  // all the purchases
+
   delete plant;
   for (size_t i = 0; i < configs.numVendingMachines; i++) {
     delete machines[i];

@@ -13,6 +13,8 @@ _Task BottlingPlant {
     NameServer &nameServer;
     unsigned int numVendingMachines, maxShippedPerFlavour, maxStockPerFlavour, timeBetweenShipments;
     Truck* truck;
+    bool isClosingDown;
+    unsigned int generatedStock[NUM_FLAVOURS];
 
     enum States {Starting = 'S', Generating = 'G', PickedUp = 'P', Finished = 'F'};
     void main();
