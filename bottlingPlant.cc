@@ -45,6 +45,10 @@ void BottlingPlant::main() {
     _Accept(getShipment) {
     } or _Accept(~BottlingPlant) {
       isClosingDown = true;
+
+      _Accept(getShipment); // We have to handle one more getShipment() call to let the truck know
+      // that plant is closing down
+
       break;
     }
   }

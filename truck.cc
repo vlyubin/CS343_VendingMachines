@@ -31,15 +31,28 @@ void Truck::main() {
     printer.print(Printer::Truck, PickedUp, totalShipment);
 
     for (size_t i = 0; i < numVendingMachines; i++) {
+      printer.print(Printer::Truck, BeginDelivery, (int)machines[i]->getId(), totalShipment);
       unsigned int* machineInventory = machines[i]->inventory();
 
+      int emptySlotsLeft = 0; // How many empty slots will be left after delivery
       for (size_t j = 0; j < NUM_FLAVOURS; j++) {
         unsigned int cansToAdd = min(maxStockPerFlavour - machineInventory[j], cargo[j]);
+
+        // Restock cansToAdd cans
         machineInventory[j] += cansToAdd;
         cargo[j] -= cansToAdd;
+        totalShipment -= cansToAdd; // Update the shipment amount we have left
+
+        emptySlotsLeft += maxStockPerFlavour - machineInventory[j];
+      }
+
+      if (emptySlotsLeft) {
+        // There were empty slots left, so delivery is unsuccessfull
+        printer.print(Printer::Truck, UnsuccessfullyFilled, (int)machines[i]->getId(), emptySlotsLeft);
       }
 
       machines[i]->restocked();
+      printer.print(Printer::Truck, EndDelivery, (int)machines[i]->getId(), totalShipment);
     }
   }
 

@@ -17,7 +17,7 @@ MPRNG randGen;
 
 // Displays usage error message and quits the program with non-zero return code
 void usageError() {
-  osacquire(cout) << "Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]" << endl;
+  osacquire(cout) << "Usage: ./soda_64 [ config-file [ random-seed (> 0) ] ]" << endl;
   exit(EXIT_FAILURE); // TERMINATE
 }
 

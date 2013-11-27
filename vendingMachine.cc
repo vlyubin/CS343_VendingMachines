@@ -48,11 +48,9 @@ void VendingMachine::main() {
 
   while (true) {
     _Accept(buy) {
-
     } or _Accept(inventory) {
 
-      // Don't acceptbuy while restocking
-      // TODO Volodymyr: verify how this construct works
+      // Don't accept buy while restocking; wait for the restocked() call
       _Accept(restocked) {}
 
     } or _Accept(~VendingMachine) {
