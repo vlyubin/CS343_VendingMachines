@@ -6,15 +6,28 @@ VendingMachine::VendingMachine(Printer &prt, NameServer &nameServer, unsigned in
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard &card) {
-  return VendingMachine::BUY; //TODO
+  if (soda[flavour] == 0) {
+    return STOCK; // No more soda of this flavour left
+  } else if (card.getBalance() < sodaCost) {
+    return FUNDS; // Not enough funds to purchase a bottle
+  }
+
+  // Otherwise we have enough funds and can complete the purchase
+  card.withdraw(sodaCost); // Pay for soda
+  soda[flavour]--; // Update soda count
+
+  printer.print(Printer::Vending, id, Bought, (int)flavour, (int)soda[flavour]);
+
+  return VendingMachine::BUY; // Success
 }
 
 unsigned int* VendingMachine::inventory() {
+  printer.print(Printer::Vending, id, (char)StartReloading);
   return soda;
 }
 
 void VendingMachine::restocked() {
-  // TODO
+  printer.print(Printer::Vending, id, (char)CompleteReloading);
 }
 
 _Nomutex unsigned int VendingMachine::cost() {
@@ -30,6 +43,7 @@ VendingMachine::~VendingMachine() {
 }
 
 void VendingMachine::main() {
+  printer.print(Printer::Vending, id, (char)Starting, (int)sodaCost);
   nameServer.VMregister(this);
 
   while (true) {
@@ -37,10 +51,14 @@ void VendingMachine::main() {
 
     } or _Accept(inventory) {
 
-    } or _Accept(restocked) {
+      // Don't acceptbuy while restocking
+      // TODO Volodymyr: verify how this construct works
+      _Accept(restocked) {}
 
     } or _Accept(~VendingMachine) {
       break;
     }
   }
+
+  printer.print(Printer::Vending, id, (char)Finished);
 }

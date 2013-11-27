@@ -12,6 +12,8 @@ _Task NameServer {
     unsigned int numVendingMachines, numStudents;
     VendingMachine** machines;
     enum States {Starting = 'S', RegisterVM = 'R', NewVM = 'N', Finished = 'F'};
+    unsigned int nextId;
+    unsigned int* studentPosition;
 
     void main();
   public:

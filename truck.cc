@@ -11,6 +11,8 @@ Truck::Truck(Printer &prt, NameServer &nameServer, BottlingPlant &plant,
 }
 
 void Truck::main() {
+  printer.print(Printer::Truck, Starting);
+
   unsigned int cargo[NUM_FLAVOURS];
   VendingMachine** machines = nameServer.getMachineList();
 
@@ -21,6 +23,12 @@ void Truck::main() {
     if (plantClosingDown) {
       break;
     }
+
+    int totalShipment = 0;
+    for (size_t i = 0; i < NUM_FLAVOURS; i++) {
+      totalShipment += cargo[i];
+    }
+    printer.print(Printer::Truck, PickedUp, totalShipment);
 
     for (size_t i = 0; i < numVendingMachines; i++) {
       unsigned int* machineInventory = machines[i]->inventory();
@@ -34,4 +42,6 @@ void Truck::main() {
       machines[i]->restocked();
     }
   }
+
+  printer.print(Printer::Truck, Finished);
 }
