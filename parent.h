@@ -10,6 +10,8 @@ _Task Parent {
 		Bank& bank;
 		const unsigned int numStudents;
 		const unsigned int parentalDelay;
+
+		enum states { Start = 'S', Deposit = 'D', Finish = 'F' };
   public:
     Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay );
 };

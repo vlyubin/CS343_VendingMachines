@@ -26,9 +26,12 @@ _Task WATCardOffice {
 
     _Task Courier {
 			WATCardOffice& office;
+			Printer& printer;
 			void main();
+			enum state { Start = 'S', StartTransfer = 't', CompleteTransfer = 'T',
+				Finish = 'F'};
 		 public:
-			Courier( WATCardOffice& office );
+			Courier( WATCardOffice& office, Printer& printer );
 		};                 // communicates with bank
 
     void main();
@@ -43,8 +46,11 @@ _Task WATCardOffice {
 		bool inDestructor;
 
 		// This can be returned from requestWork to indicate to a courier that it
-		// shoudl terminate.
+		// should terminate.
 		static Job* const KILL_YOURSELF;
+
+		enum states { Start = 'S', Create = 'C', Transfer = 'T', Work = 'W',
+			Finish = 'F' };
 
   public:
     _Event Lost {};                        // uC++ exception type, like "struct"

@@ -11,7 +11,7 @@ WATCardOffice::WATCardOffice( Printer& prt, Bank& bank,
 	
 	couriers = new Courier*[numCouriers];
 	for ( unsigned int i = 0; i < numCouriers; ++i ) {
-		couriers[i] = new Courier( *this );
+		couriers[i] = new Courier( *this, printer );
 	}
 }
 	
@@ -29,20 +29,28 @@ WATCardOffice::~WATCardOffice() {
 }
 
 void WATCardOffice::main() {
+	printer.print( Printer::WATCardOffice, Start );
 	while (true) {
 		_Accept( create ) {
 			jobQueue.push( newJob );
 			availableJobs.signal();
+			printer.print( Printer::WATCardOffice, (char)Create, newJob->args.sid,
+				newJob->args.amount );
 
 		} or _Accept( transfer ) {
 			jobQueue.push( newJob );
 			availableJobs.signal();
+			printer.print( Printer::WATCardOffice, (char)Transfer, newJob->args.sid,
+				newJob->args.amount );
 
 		} or _Accept( requestWork ) {
+			printer.print( Printer::WATCardOffice, (char)Work );
+
 		} or _Accept( ~WATCardOffice ) {
 			break;
 		}
 	}
+	printer.print( Printer::WATCardOffice, Finish );
 }
 
 WATCard::FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount ){
