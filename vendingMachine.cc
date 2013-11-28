@@ -2,7 +2,11 @@
 
 VendingMachine::VendingMachine(Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
     unsigned int maxStockPerFlavour) : printer(prt), nameServer(nameServer), id(id), sodaCost(sodaCost),
-  maxStockPerFlavour(maxStockPerFlavour), soda(new unsigned int[NUM_FLAVOURS]) {
+    maxStockPerFlavour(maxStockPerFlavour), soda(new unsigned int[NUM_FLAVOURS]) {
+  // Initially VM is empty
+  for (size_t i = 0; i < NUM_FLAVOURS; i++) {
+    soda[i] = 0;
+  }
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard &card) {

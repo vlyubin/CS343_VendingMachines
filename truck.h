@@ -11,6 +11,7 @@ _Task Truck {
     BottlingPlant &plant;
     unsigned int numVendingMachines, maxStockPerFlavour;
 
+    // States we can print for Truck
     enum States {Starting = 'S', PickedUp = 'P', BeginDelivery = 'd', UnsuccessfullyFilled = 'U',
       EndDelivery = 'D', Finished = 'F'};
     void main();
