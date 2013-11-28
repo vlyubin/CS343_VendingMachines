@@ -17,7 +17,7 @@ MPRNG randGen;
 
 // Displays usage error message and quits the program with non-zero return code
 void usageError() {
-  osacquire(cout) << "Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]" << endl;
+  osacquire(cout) << "Usage: ./soda_64 [ config-file [ random-seed (> 0) ] ]" << endl;
   exit(EXIT_FAILURE); // TERMINATE
 }
 
@@ -52,9 +52,27 @@ void uMain::main() {
 
   // Creation of objects starts here
   Printer *printer = new Printer(configs.numStudents, configs.numVendingMachines, configs.numCouriers);
+  NameServer *nameServer = new NameServer(*printer, configs.numVendingMachines, configs.numStudents);
+
+  vector<VendingMachine*> machines;
+  for (size_t i = 0; i < configs.numVendingMachines; i++) {
+    machines.push_back(new VendingMachine(*printer, *nameServer, i, configs.sodaCost, configs.maxStockPerFlavour));
+  }
+
+  BottlingPlant *plant = new BottlingPlant(*printer, *nameServer, configs.numVendingMachines,
+      configs.maxShippedPerFlavour, configs.maxStockPerFlavour, configs.timeBetweenShipments);
   // Creation of objects ends here
 
   // Deletion of objects starts here
+
+  // Delete students first - the system should be ready to close down when they did
+  // all the purchases
+
+  delete plant;
+  for (size_t i = 0; i < configs.numVendingMachines; i++) {
+    delete machines[i];
+  }
+  delete nameServer;
   delete printer;
   // Deletion of objects ends here
 } // uMain::main

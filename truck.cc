@@ -1,4 +1,8 @@
 #include "truck.h"
+#include "vendingMachine.h"
+#include "MPRNG.h"
+
+using namespace std;
 
 Truck::Truck(Printer &prt, NameServer &nameServer, BottlingPlant &plant,
     unsigned int numVendingMachines, unsigned int maxStockPerFlavour) : printer(prt),
@@ -7,4 +11,50 @@ Truck::Truck(Printer &prt, NameServer &nameServer, BottlingPlant &plant,
 }
 
 void Truck::main() {
+  printer.print(Printer::Truck, Starting);
+
+  unsigned int cargo[NUM_FLAVOURS];
+  VendingMachine** machines = nameServer.getMachineList();
+
+  while (1) {
+    yield(randGen(1, 10));
+    bool plantClosingDown = plant.getShipment(cargo);
+
+    if (plantClosingDown) {
+      break;
+    }
+
+    int totalShipment = 0;
+    for (size_t i = 0; i < NUM_FLAVOURS; i++) {
+      totalShipment += cargo[i];
+    }
+    printer.print(Printer::Truck, PickedUp, totalShipment);
+
+    for (size_t i = 0; i < numVendingMachines; i++) {
+      printer.print(Printer::Truck, BeginDelivery, (int)machines[i]->getId(), totalShipment);
+      unsigned int* machineInventory = machines[i]->inventory();
+
+      int emptySlotsLeft = 0; // How many empty slots will be left after delivery
+      for (size_t j = 0; j < NUM_FLAVOURS; j++) {
+        unsigned int cansToAdd = min(maxStockPerFlavour - machineInventory[j], cargo[j]);
+
+        // Restock cansToAdd cans
+        machineInventory[j] += cansToAdd;
+        cargo[j] -= cansToAdd;
+        totalShipment -= cansToAdd; // Update the shipment amount we have left
+
+        emptySlotsLeft += maxStockPerFlavour - machineInventory[j];
+      }
+
+      if (emptySlotsLeft) {
+        // There were empty slots left, so delivery is unsuccessfull
+        printer.print(Printer::Truck, UnsuccessfullyFilled, (int)machines[i]->getId(), emptySlotsLeft);
+      }
+
+      machines[i]->restocked();
+      printer.print(Printer::Truck, EndDelivery, (int)machines[i]->getId(), totalShipment);
+    }
+  }
+
+  printer.print(Printer::Truck, Finished);
 }

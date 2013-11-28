@@ -40,7 +40,7 @@ _Task WATCardOffice {
 		~WATCardOffice();
     WATCard::FWATCard create( unsigned int sid, unsigned int amount );
     WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, 
-			WATCard *card );
+            WATCard *card );
     Job *requestWork();
 };
 
