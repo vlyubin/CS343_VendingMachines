@@ -12,10 +12,12 @@ _Task Student {
 	const unsigned int id;
 	const unsigned int maxPurchases;
 
+  enum States {Starting = 'S', SelectingVM = 'V', Bought = 'B', LostCard = 'L',
+      Finished = 'F'};
 	void main();
  public:
-	Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffice, unsigned int id,
-		unsigned int maxPurchases );
+	Student(Printer &prt, NameServer &nameServer, WATCardOffice &cardOffice, unsigned int id,
+		unsigned int maxPurchases);
 };
 
 #endif // STUDENT_H_
