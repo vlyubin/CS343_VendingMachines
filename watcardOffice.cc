@@ -23,7 +23,9 @@ void WATCardOffice::main() {
 			jobQueue.push( newJob );
 			availableJobs.signal();
 
-		} or _Accept( requestWork, ~WATCardOffice ) {
+		} or _Accept( requestWork ) {
+		} or _Accept( ~WATCardOffice ) {
+			break;
 		}
 	}
 }
