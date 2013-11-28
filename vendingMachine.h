@@ -11,8 +11,9 @@ _Task VendingMachine {
     Printer &printer;
     NameServer &nameServer;
     unsigned int id, sodaCost, maxStockPerFlavour;
-    unsigned int* soda;
+    unsigned int* soda; // Soda that this VM contains. NUM_FLAVOURS
 
+    // States we can print for Truck
     enum States {Starting = 'S', StartReloading = 'r', CompleteReloading = 'R', Bought = 'B', Finished = 'F'};
     void main();
   public:
