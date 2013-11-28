@@ -11,7 +11,7 @@ void Student::main() {
 	VendingMachine::Flavours favouriteFlavour =
 		static_cast<VendingMachine::Flavours>(randGen(0, 3));
 	
-	printer.print(Printer::Student, id, Finished, (int)favouriteFlavour, (int)bottlesToPurchase);
+	printer.print(Printer::Student, id, Starting, (int)favouriteFlavour, (int)bottlesToPurchase);
 
 	WATCard::FWATCard watcard = cardOffice.create(id, 5);
 	VendingMachine* machine = nameServer.getMachine(id);
