@@ -12,8 +12,8 @@ _Task BottlingPlant {
     Printer &printer;
     NameServer &nameServer;
     unsigned int numVendingMachines, maxShippedPerFlavour, maxStockPerFlavour, timeBetweenShipments;
-    Truck* truck;
     bool isClosingDown; // True if plant is closed now, false otherwise
+    Truck* truck;
     unsigned int generatedStock[NUM_FLAVOURS]; // Quantity of stock that we generated for each flavour
 
     // States we can print for BottlingPlant
