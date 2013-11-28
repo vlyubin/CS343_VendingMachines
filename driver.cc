@@ -2,16 +2,20 @@
 #include <vector>
 #include <unistd.h>
 
-#include "config.h"
-#include "printer.h"
-#include "nameServer.h"
-#include "vendingMachine.h"
+#include "bank.h"
 #include "bottlingPlant.h"
+#include "config.h"
 #include "MPRNG.h"
+#include "nameServer.h"
+#include "parent.h"
+#include "printer.h"
+#include "student.h"
+#include "vendingMachine.h"
+#include "watcardOffice.h"
 
 using namespace std;
 
-char* DEFAULT_CONFIG_FILE = "soda.config";
+const char* DEFAULT_CONFIG_FILE = "soda.config";
 
 MPRNG randGen;
 
@@ -39,7 +43,7 @@ void uMain::main() {
   }
 
   ConfigParms configs;
-  char* configFile = argc <= 1 ? DEFAULT_CONFIG_FILE : argv[1];
+  const char* configFile = argc <= 1 ? DEFAULT_CONFIG_FILE : argv[1];
   processConfigFile(configFile, configs);
 
   int seed = argc <= 2 ? getpid() : readArgvNumber(argv, 2);
@@ -61,13 +65,34 @@ void uMain::main() {
 
   BottlingPlant *plant = new BottlingPlant(*printer, *nameServer, configs.numVendingMachines,
       configs.maxShippedPerFlavour, configs.maxStockPerFlavour, configs.timeBetweenShipments);
+
+	Bank *bank = new Bank( configs.numStudents );
+
+	WATCardOffice *cardOffice = new WATCardOffice( *printer, *bank, configs.numCouriers );
+
+	Parent *parent = new Parent( *printer, *bank, configs.numStudents, configs.parentalDelay );
+
+	vector<Student*> students;
+	for ( unsigned int id = 0; id < configs.numStudents; ++id ) {
+		students.push_back( new Student( *printer, *nameServer, *cardOffice, id, configs.maxPurchases ) );
+	}
+	
   // Creation of objects ends here
 
   // Deletion of objects starts here
 
   // Delete students first - the system should be ready to close down when they did
   // all the purchases
+	
+	vector<Student*>::iterator student;
+	for (student = students.begin(); student != students.end(); ++student) {
+		delete *student;
+	}
+	students.clear();
 
+	delete parent;
+	delete cardOffice;
+	delete bank;
   delete plant;
   for (size_t i = 0; i < configs.numVendingMachines; i++) {
     delete machines[i];
