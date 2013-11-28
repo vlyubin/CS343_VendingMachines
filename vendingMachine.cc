@@ -57,7 +57,7 @@ void VendingMachine::main() {
       // Don't accept buy while restocking; wait for the restocked() call
       _Accept(restocked) {}
 
-    } or _Accept(~VendingMachine) {
+    } or _Accept(~VendingMachine) {  // Used to indicate termination
       break;
     }
   }

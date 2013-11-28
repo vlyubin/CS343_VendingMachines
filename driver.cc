@@ -83,7 +83,6 @@ void uMain::main() {
 
   // Delete students first - the system should be ready to close down when they did
   // all the purchases
-	
 	vector<Student*>::iterator student;
 	for (student = students.begin(); student != students.end(); ++student) {
 		delete *student;

@@ -39,6 +39,7 @@ void NameServer::main() {
     _Accept(VMregister);
   }
 
+  // Split students into initial buckets
   for (size_t i = 0; i < numStudents; i++) {
     studentPosition[i] = i % numVendingMachines;
   }
@@ -46,7 +47,7 @@ void NameServer::main() {
   while (true) {
     _Accept(getMachine) {
     } or _Accept(getMachineList) {
-    } or _Accept(~NameServer) {
+    } or _Accept(~NameServer) { // Used to indicate termination
       break;
     }
   }

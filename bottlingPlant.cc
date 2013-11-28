@@ -35,6 +35,7 @@ void BottlingPlant::main() {
   while (true) {
     yield(timeBetweenShipments);
 
+    // Generate stock and calculate the total amount of bottles created
     int totalBottlesCreated = 0;
     for (size_t i = 0; i < NUM_FLAVOURS; i++) {
       generatedStock[i] = randGen(maxShippedPerFlavour);
@@ -43,8 +44,8 @@ void BottlingPlant::main() {
     printer.print(Printer::BottlingPlant, Generating, totalBottlesCreated);
 
     _Accept(getShipment) {
-    } or _Accept(~BottlingPlant) {
-      isClosingDown = true;
+    } or _Accept(~BottlingPlant) { // Used to indicate termination
+      isClosingDown = true; // We are now closing the plant
 
       _Accept(getShipment); // We have to handle one more getShipment() call to let the truck know
       // that plant is closing down
