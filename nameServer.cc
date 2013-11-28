@@ -19,6 +19,8 @@ void NameServer::VMregister(VendingMachine *vendingmachine) {
 }
 
 VendingMachine* NameServer::getMachine(unsigned int id) {
+  assert(studentPosition[id] >= 0 && studentPosition[id] < numVendingMachines &&
+      "Invalid machine for student in nameServer data");
   unsigned int postion = studentPosition[id];
   studentPosition[id] = (studentPosition[id] + 1) % numVendingMachines;
 
