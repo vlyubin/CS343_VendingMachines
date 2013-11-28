@@ -15,27 +15,28 @@ WATCardOffice::~WATCardOffice() {
 
 void WATCardOffice::main() {
 	while (true) {
-		_Accept(create, transfer, requestWork, ~WATCardOffice);
+		_Accept( create ) {
+			jobQueue.push( newJob );
+			availableJobs.signal();
+
+		} or _Accept( transfer ) {
+			jobQueue.push( newJob );
+			availableJobs.signal();
+
+		} or _Accept( requestWork, ~WATCardOffice ) {
+		}
 	}
 }
 
 WATCard::FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount ){
-	Job::Args args( bank, sid, amount );
-	Job *job = new Job( args );
-	jobQueue.push( job );
-	availableJobs.signal();
-	return job->result;
+	newJob = new Job( Job::Args( bank, sid, amount ) );
+	return newJob->result;
 }
 
 WATCard::FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount,
 		WATCard* card ) {
-	Job::Args args( bank, sid, amount + card->getBalance() );
-	delete card;
-
-	Job *job = new Job( args );
-	jobQueue.push( job );
-	availableJobs.signal();
-	return job->result;
+	newJob = new Job( Job::Args( bank, sid, amount, card ) );
+	return newJob->result;
 }
 
 WATCardOffice::Job* WATCardOffice::requestWork() {

@@ -47,6 +47,10 @@ void Student::main() {
 			}
 		}
 	}
+
+	// The student is responsible for deleting their watcard when the are done
+	// with it.
+	delete watcard();
 }
 
 Student::Student( Printer &prt, NameServer &nameServer,
