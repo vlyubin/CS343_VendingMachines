@@ -33,13 +33,13 @@ void WATCardOffice::main() {
 	while (true) {
 		_Accept( create ) {
 			jobQueue.push( newJob );
-			availableJobs.signal();
+			availableJobs.signalBlock();
 			printer.print( Printer::WATCardOffice, (char)Create, newJob->args.sid,
 				newJob->args.amount );
 
 		} or _Accept( transfer ) {
 			jobQueue.push( newJob );
-			availableJobs.signal();
+			availableJobs.signalBlock();
 			printer.print( Printer::WATCardOffice, (char)Transfer, newJob->args.sid,
 				newJob->args.amount );
 
