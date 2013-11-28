@@ -10,6 +10,7 @@ VendingMachine::VendingMachine(Printer &prt, NameServer &nameServer, unsigned in
 }
 
 VendingMachine::Status VendingMachine::buy(Flavours flavour, WATCard &card) {
+  assert(soda[flavour] >= 0 && "Invalid amount of soda in VM");
   if (soda[flavour] == 0) {
     return STOCK; // No more soda of this flavour left
   } else if (card.getBalance() < sodaCost) {
