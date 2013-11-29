@@ -19,8 +19,11 @@ void WATCardOffice::Courier::main() {
 			job->args.amount );
 
 		job->args.bank.withdraw( job->args.sid, job->args.amount );
-		job->args.card->deposit( job->args.amount );
-		// TODO: Check if we need to die
+		try {
+			job->args.card->deposit( job->args.amount );
+		} catch ( uCondition::WaitingFailure ) {
+			break;
+		}
 		
 		printer.print( Printer::Courier, (char)CompleteTransfer,
 			job->args.sid, job->args.amount );
@@ -32,6 +35,8 @@ void WATCardOffice::Courier::main() {
 		} else {
 			job->result.delivery( job->args.card );
 		}
+
+		delete job;
 	}
 }
 
