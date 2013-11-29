@@ -8,6 +8,7 @@ _Monitor Printer {
   public:
     enum Kind {Parent, WATCardOffice, NameServer, Truck, BottlingPlant, Student, Vending, Courier};
     Printer(unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers);
+    ~Printer();
     
     /* All print functions are intended to change the state of the specified actor, and possibly
      * set his extra values (if those were supplied in form of value1/value2). If the state of
@@ -25,7 +26,6 @@ _Monitor Printer {
   	unsigned int numVendingMachines;
   	unsigned int numCouriers;
     unsigned int numActors; // Total number of actors in the process
-    unsigned int numTerminated; // Total number of actors terminated
     std::map<unsigned int, char> buffer; // Mapping from actor id to its current state
     std::map<unsigned int, std::pair<int, int> > extraValues; // Mapping from actor id
     // to the extra values we might have to store for it

@@ -25,7 +25,7 @@ using namespace std;
 
 Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers) :
     numStudents(numStudents), numVendingMachines(numVendingMachines), numCouriers(numCouriers),
-    numActors(NUM_SINGLE_ACTORS + numStudents + numVendingMachines + numCouriers), numTerminated(0) {
+    numActors(NUM_SINGLE_ACTORS + numStudents + numVendingMachines + numCouriers) {
   // Print the column headings
   cout << PARENT << TAB << WATCARD_OFFICE << TAB << NAME_SERVER << TAB << TRUCK << TAB << PLANT;
   for (unsigned int i = 0; i < numStudents; i++) {
@@ -44,6 +44,11 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
     cout << TAB << DELIMITER;
   }
   cout << endl;
+}
+
+Printer::~Printer() {
+  // When everyone is terminated, print termination delimiter
+  cout << FINAL_DELIMITER << endl;
 }
 
 unsigned int Printer::convertToGlobalId(Kind kind, unsigned int lid) {
@@ -128,7 +133,6 @@ void Printer::displayStates() {
 }
 
 void Printer::displayFinishedState(unsigned int finishedId) {
-  numTerminated++;
   for (unsigned int i = 0; i < numActors; i++) {
     if (i) { // Print the tab for every entry, but first
       cout << TAB;
@@ -137,8 +141,4 @@ void Printer::displayFinishedState(unsigned int finishedId) {
     cout << ((i == finishedId) ? FINISHED_ME : FINISHED_OTHER);
   }
   cout << endl;
-  if (numTerminated == numActors) {
-    // If all actors terminated, print termination message
-    cout << FINAL_DELIMITER << endl;
-  }
 }
