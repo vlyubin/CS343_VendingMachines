@@ -1,0 +1,34 @@
+The first part of testing is incorrect usage testing. To do this, we check the behaviour of the program
+on various invalid usages, like too many parameters or invalid values:
+
+linux028:~/cs343/a6/CS343_A6> make
+make: Nothing to be done for `all'.
+
+linux028:~/cs343/a6/CS343_A6> ./soda 1 2 3 
+Usage: ./soda [ config-file [ random-seed (> 0) ] ]
+
+linux028:~/cs343/a6/CS343_A6> ./soda UNEXISTING_CONFIG_FILE
+Error: could not open input file "UNEXISTING_CONFIG_FILE"
+
+linux028:~/cs343/a6/CS343_A6> ./soda soda.config -1
+Usage: ./soda [ config-file [ random-seed (> 0) ] ]
+
+linux028:~/cs343/a6/CS343_A6> ./soda soda.config SHOULD_BE_INT
+Usage: ./soda [ config-file [ random-seed (> 0) ] ]
+
+We correctly handle invalid inputs.
+
+---------------------------------------------------------------------
+
+The main part of testing comes from assertions placed in the code, that will force the program to quit
+when encountering abnormal condition. The tests in the code are the following:
+
+// TODO
+
+Additionally we can check that no deadlocks or other problems arise. We've made a script that will allow me to
+check the possible input combos. For each combo of input parameters, we generate appropriate config file, and
+run our program with it. If the deadlock will happen, the script will stop in the middle, without printing
+FINISHED message. If asseriton fails, the message will get printed to console.
+Here's the result of running the tests:
+
+// TODO

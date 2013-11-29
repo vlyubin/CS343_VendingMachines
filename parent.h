@@ -13,7 +13,7 @@ _Task Parent {
 
 		enum states { Start = 'S', Deposit = 'D', Finish = 'F' };
   public:
-    Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay );
+    Parent(Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay);
 };
 
 #endif // PARENT_H_

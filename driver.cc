@@ -21,7 +21,7 @@ MPRNG randGen;
 
 // Displays usage error message and quits the program with non-zero return code
 void usageError() {
-  osacquire(cout) << "Usage: ./soda_64 [ config-file [ random-seed (> 0) ] ]" << endl;
+  osacquire(cout) << "Usage: ./soda [ config-file [ random-seed (> 0) ] ]" << endl;
   exit(EXIT_FAILURE); // TERMINATE
 }
 
@@ -49,7 +49,7 @@ void uMain::main() {
   int seed = argc <= 2 ? getpid() : readArgvNumber(argv, 2);
 
   // Uncomment to use more processors if there is a need.
-  // uProcessor p[16] __attribute__((  ));
+  // uProcessor p[16] __attribute__(());
 
   // Set the random seed
   randGen.seed(seed);
@@ -66,15 +66,15 @@ void uMain::main() {
   BottlingPlant *plant = new BottlingPlant(*printer, *nameServer, configs.numVendingMachines,
       configs.maxShippedPerFlavour, configs.maxStockPerFlavour, configs.timeBetweenShipments);
 
-	Bank *bank = new Bank( configs.numStudents );
+	Bank *bank = new Bank(configs.numStudents);
 
-	WATCardOffice *cardOffice = new WATCardOffice( *printer, *bank, configs.numCouriers );
+	WATCardOffice *cardOffice = new WATCardOffice(*printer, *bank, configs.numCouriers);
 
-	Parent *parent = new Parent( *printer, *bank, configs.numStudents, configs.parentalDelay );
+	Parent *parent = new Parent(*printer, *bank, configs.numStudents, configs.parentalDelay);
 
 	vector<Student*> students;
-	for ( unsigned int id = 0; id < configs.numStudents; ++id ) {
-		students.push_back( new Student( *printer, *nameServer, *cardOffice, id, configs.maxPurchases ) );
+	for (unsigned int id = 0; id < configs.numStudents; ++id) {
+		students.push_back(new Student(*printer, *nameServer, *cardOffice, id, configs.maxPurchases));
 	}
 	
   // Creation of objects ends here

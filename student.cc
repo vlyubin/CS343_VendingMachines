@@ -24,7 +24,7 @@ void Student::main() {
 		while (!boughtSoda) {
 			try {
 				VendingMachine::Status status =
-					machine->buy( favouriteFlavour, *(watcard()) );
+					machine->buy(favouriteFlavour, *(watcard()));
 
 				switch(status) {
 				 case VendingMachine::BUY:
@@ -40,7 +40,7 @@ void Student::main() {
 				 
 				 case VendingMachine::FUNDS:
 				 	// Insufficient funds; transfer more money.
-				 	watcard = cardOffice.transfer( id, 5 + machine->cost(), watcard );
+				 	watcard = cardOffice.transfer(id, 5 + machine->cost(), watcard);
 					break;
 
 				 default:

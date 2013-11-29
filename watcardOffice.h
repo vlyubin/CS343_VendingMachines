@@ -16,12 +16,12 @@ _Task WATCardOffice {
 					unsigned int amount;   // How much to trasfer
 					WATCard* card;         // If set, transfer onto this card, 
 					                       //   otherwise create a new card
-					Args( Bank& bank, unsigned int sid, unsigned int amount, WATCard* card = NULL )
-						: bank( bank ), sid( sid ), amount( amount ), card( card ) {}
+					Args(Bank& bank, unsigned int sid, unsigned int amount, WATCard* card = NULL)
+						: bank(bank), sid(sid), amount(amount), card(card) {}
 				};
         Args args;                         // call arguments (YOU DEFINE "Args")
         WATCard::FWATCard result;                   // return future
-        Job( Args args ) : args( args ) {}
+        Job(Args args) : args(args) {}
     };
 
     _Task Courier {
@@ -31,7 +31,7 @@ _Task WATCardOffice {
 			enum state { Start = 'S', StartTransfer = 't', CompleteTransfer = 'T',
 				Finish = 'F'};
 		 public:
-			Courier( WATCardOffice& office, Printer& printer );
+			Courier(WATCardOffice& office, Printer& printer);
 		};                 // communicates with bank
 
     void main();
@@ -54,11 +54,11 @@ _Task WATCardOffice {
 
   public:
     _Event Lost {};                        // uC++ exception type, like "struct"
-    WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
+    WATCardOffice(Printer &prt, Bank &bank, unsigned int numCouriers);
 		~WATCardOffice();
-    WATCard::FWATCard create( unsigned int sid, unsigned int amount );
-    WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, 
-            WATCard *card );
+    WATCard::FWATCard create(unsigned int sid, unsigned int amount);
+    WATCard::FWATCard transfer(unsigned int sid, unsigned int amount, 
+            WATCard *card);
 		/* Either returns a job pointer or value WATCardOffice::KILL_YOURSELF
 		 * KILL_YOURSELF is returned when the destructor of WATCardOffice has been
 		 * called and the couriers need to terminate. */
