@@ -1,5 +1,7 @@
 #include "vendingMachine.h"
 
+using namespace std;
+
 VendingMachine::VendingMachine(Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
     unsigned int maxStockPerFlavour) : printer(prt), nameServer(nameServer), id(id), sodaCost(sodaCost),
     maxStockPerFlavour(maxStockPerFlavour), soda(new unsigned int[NUM_FLAVOURS]) {
@@ -52,12 +54,11 @@ void VendingMachine::main() {
   nameServer.VMregister(this);
 
   while (true) {
-    _Accept(buy) {
-    } or _Accept(inventory) {
-
+    _Accept(inventory) {
       // Don't accept buy while restocking; wait for the restocked() call
-      _Accept(restocked) {}
+      _Accept(restocked) {};
 
+    } or _Accept(buy) {
     } or _Accept(~VendingMachine) {  // Used to indicate termination
       break;
     }
