@@ -69,6 +69,10 @@ WATCard::FWATCard WATCardOffice::transfer(unsigned int sid, unsigned int amount,
 } // WATCardOffice::transfer
 
 WATCardOffice::Job* WATCardOffice::requestWork() {
+	if (inDestructor) {
+		return KILL_YOURSELF;
+	} // if
+
 	if (jobQueue.empty()) {
 		availableJobs.wait();
 		if (inDestructor) {
