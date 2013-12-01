@@ -7,35 +7,33 @@
 #include "vendingMachine.h"
 
 void Student::main() {
-	unsigned int bottlesToPurchase = randGen(1, maxPurchases);
+	unsigned int bottlesToPurchase = randGen(1, maxPurchases); // random number of bottles to purchase
 	VendingMachine::Flavours favouriteFlavour =
-		static_cast<VendingMachine::Flavours>(randGen(0, 3));
+		static_cast<VendingMachine::Flavours>(randGen(0, 3)); // random favourite flavour
 	
 	printer.print(Printer::Student, id, Starting, (int)favouriteFlavour, (int)bottlesToPurchase);
 
-	WATCard::FWATCard watcard = cardOffice.create(id, 5);
-	VendingMachine* machine = nameServer.getMachine(id);
+	WATCard::FWATCard watcard = cardOffice.create(id, 5); // create WATCard future with $5
+	VendingMachine* machine = nameServer.getMachine(id); // get a vending machine from the name server
 	printer.print(Printer::Student, id, (char)SelectingVM, (int)machine->getId());
 
-	while (bottlesToPurchase > 0) {
+	while (bottlesToPurchase > 0) { // buys one bottle on each loop iteration
 		yield(randGen(1, 10));
 
-		bool boughtSoda = false;
-		while (!boughtSoda) {
+		RetryBuy: while (true) { // loop until student manages to buy a bottle
 			try {
 				VendingMachine::Status status =
-					machine->buy(favouriteFlavour, *(watcard()));
+					machine->buy(favouriteFlavour, *(watcard())); // attempt to buy a soda bottle
 
 				switch(status) {
 				 case VendingMachine::BUY:
-				 	bottlesToPurchase -= 1;
-					boughtSoda = true;
-					printer.print(Printer::Student, id, (char)Bought, (int)watcard()->getBalance());
-					break;
+				 	// Successfully bought a bottle. Stop retrying.
+				 	break RetryBuy;
 
 				 case VendingMachine::STOCK:
-				 	// Try another machine
+				 	// Vending machine is out of stock. Try another.
 					nameServer.getMachine(id);
+					printer.print(Printer::Student, id, (char)SelectingVM, (int)machine->getId());
 					break;
 				 
 				 case VendingMachine::FUNDS:
@@ -45,24 +43,27 @@ void Student::main() {
 
 				 default:
 				 	assert(false && "Invalid vending machine status!");
-				}
-				 	
-			} catch (const WATCardOffice::Lost& e) {
+				} // switch
+
+			} catch (const WATCardOffice::Lost& e) { // Watcard was lost
 				printer.print(Printer::Student, id, (char)LostCard);
-				watcard = cardOffice.create(id, 5);
-			}
-		}
-	}
+				watcard = cardOffice.create(id, 5); // Create a new new watcard with $5
+			} // try
+		} // while
+
+		bottlesToPurchase -= 1;
+		printer.print(Printer::Student, id, (char)Bought, (int)watcard()->getBalance());
+	} // while
 
 	// The student is responsible for deleting their watcard when the are done
 	// with it.
 	delete watcard();
 
 	printer.print(Printer::Student, id, (char)Finished);
-}
+} // Student::main
 
 Student::Student(Printer &prt, NameServer &nameServer,
 		WATCardOffice &cardOffice, unsigned int id, unsigned int maxPurchases)
 		: printer(prt), nameServer(nameServer), cardOffice(cardOffice), 
 		  id(id), maxPurchases(maxPurchases) {
-}
+} // Student::Student
