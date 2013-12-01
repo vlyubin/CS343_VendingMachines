@@ -3,15 +3,6 @@
 
 WATCard::WATCard(): balance(0) {}
 
-WATCard::WATCard(const WATCard& watcard)
-	:balance(watcard.balance) {
-}
-
-WATCard& WATCard::operator=(const WATCard& watcard) {
-	balance = watcard.balance;
-	return *this;
-}
-
 void WATCard::deposit(unsigned int amount) {
 	balance += amount;
 }
