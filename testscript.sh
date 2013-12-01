@@ -17,21 +17,21 @@
 
 for SodaCost in `seq 1 3`;
 do
-for NumStudents in `seq 1 3`;
+for NumStudents in `seq 1 4`;
 do
 for MaxPurchases in `seq 1 3`;
 do
 for NumVendingMachines in `seq 1 3`;
 do
-for MaxStockPerFlavour in `seq 1 3`;
+for MaxStockPerFlavour in `seq 1 2`;
 do
-for MaxShippedPerFlavour in `seq 1 3`;
+for MaxShippedPerFlavour in `seq 1 2`;
 do
-for TimeBetweenShipments in `seq 1 3`;
+for TimeBetweenShipments in `seq 4 4`;
 do
-for ParentalDelay in `seq 1 3`;
+for ParentalDelay in `seq 1 1`;
 do
-for NumCouriers in `seq 1 3`;
+for NumCouriers in `seq 1 2`;
 do
 for seed in `seq 1 3`;
 do
