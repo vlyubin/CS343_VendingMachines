@@ -35,7 +35,7 @@ void Student::main() {
 
 				 case VendingMachine::STOCK:
 				 	// Vending machine is out of stock. Try another.
-					nameServer.getMachine(id);
+					machine = nameServer.getMachine(id);
 					printer.print(Printer::Student, id, (char)SelectingVM, (int)machine->getId());
 					break;
 				 
