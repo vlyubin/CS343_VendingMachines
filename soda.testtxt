@@ -16,7 +16,10 @@ Usage: ./soda [ config-file [ random-seed (> 0) ] ]
 linux028:~/cs343/a6/CS343_A6> ./soda soda.config SHOULD_BE_INT
 Usage: ./soda [ config-file [ random-seed (> 0) ] ]
 
-We correctly handle invalid inputs.
+linux028:~/cs343/a6/CS343_A6> ./soda foo bar
+Usage: ./soda [ config-file [ random-seed (> 0) ] ]
+
+We correctly handle invalid inputs - we checked that our behaviour mirrors the reference solution.
 
 ---------------------------------------------------------------------
 
