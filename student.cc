@@ -12,7 +12,7 @@
 void Student::main() {
 	unsigned int bottlesToPurchase = randGen(1, maxPurchases); // random number of bottles to purchase
 	VendingMachine::Flavours favouriteFlavour =
-		static_cast<VendingMachine::Flavours>(randGen(NUM_FLAVOURS)); // random favourite flavour
+		static_cast<VendingMachine::Flavours>(randGen(NUM_FLAVOURS - 1)); // random favourite flavour
 	
 	printer.print(Printer::Student, id, Starting, (int)favouriteFlavour, (int)bottlesToPurchase);
 
