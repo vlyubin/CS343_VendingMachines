@@ -1,8 +1,8 @@
-#include <map>
-#include <utility>
-
 #ifndef PRINTER_H
 #define PRINTER_H
+
+#include <map>
+#include <utility>
 
 _Monitor Printer {
   public:
@@ -22,9 +22,9 @@ _Monitor Printer {
     void print(Kind kind, unsigned int lid, char state, int value1);
     void print(Kind kind, unsigned int lid, char state, int value1, int value2);
   private:
-  	unsigned int numStudents;
-  	unsigned int numVendingMachines;
-  	unsigned int numCouriers;
+    unsigned int numStudents;
+    unsigned int numVendingMachines;
+    unsigned int numCouriers;
     unsigned int numActors; // Total number of actors in the process
     std::map<unsigned int, char> buffer; // Mapping from actor id to its current state
     std::map<unsigned int, std::pair<int, int> > extraValues; // Mapping from actor id
@@ -43,6 +43,6 @@ _Monitor Printer {
     /* Print the special case of info row, where we indicate that particular task has finished execution
      */
     void displayFinishedState(unsigned int finishedId);
-};
+}; // Printer
 
 #endif //PRINTER_H_

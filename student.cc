@@ -1,19 +1,22 @@
 #include "student.h"
+#include "constants.h"
 #include "MPRNG.h"
-#include "printer.h"
 #include "nameServer.h"
-#include "watcardOffice.h"
-#include "watcard.h"
+#include "printer.h"
 #include "vendingMachine.h"
+#include "watcard.h"
+#include "watcardOffice.h"
+
+#define WATCARD_BASE_BALANCE 5
 
 void Student::main() {
 	unsigned int bottlesToPurchase = randGen(1, maxPurchases); // random number of bottles to purchase
 	VendingMachine::Flavours favouriteFlavour =
-		static_cast<VendingMachine::Flavours>(randGen(0, 3)); // random favourite flavour
+		static_cast<VendingMachine::Flavours>(randGen(NUM_FLAVOURS)); // random favourite flavour
 	
 	printer.print(Printer::Student, id, Starting, (int)favouriteFlavour, (int)bottlesToPurchase);
 
-	WATCard::FWATCard watcard = cardOffice.create(id, 5); // create WATCard future with $5
+	WATCard::FWATCard watcard = cardOffice.create(id, WATCARD_BASE_BALANCE); // create WATCard future with $5
 	VendingMachine* machine = nameServer.getMachine(id); // get a vending machine from the name server
 	printer.print(Printer::Student, id, (char)SelectingVM, (int)machine->getId());
 
@@ -38,7 +41,7 @@ void Student::main() {
 				 
 				 case VendingMachine::FUNDS:
 				 	// Insufficient funds; transfer more money.
-				 	watcard = cardOffice.transfer(id, 5 + machine->cost(), watcard);
+				 	watcard = cardOffice.transfer(id, WATCARD_BASE_BALANCE + machine->cost(), watcard);
 					break;
 
 				 default:
@@ -47,7 +50,7 @@ void Student::main() {
 
 			} catch (const WATCardOffice::Lost& e) { // Watcard was lost
 				printer.print(Printer::Student, id, (char)LostCard);
-				watcard = cardOffice.create(id, 5); // Create a new new watcard with $5
+				watcard = cardOffice.create(id, WATCARD_BASE_BALANCE); // Create a new new watcard with $5
 			} // try
 		} // while
 

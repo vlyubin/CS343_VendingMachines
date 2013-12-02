@@ -30,26 +30,26 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
   cout << PARENT << TAB << WATCARD_OFFICE << TAB << NAME_SERVER << TAB << TRUCK << TAB << PLANT;
   for (unsigned int i = 0; i < numStudents; i++) {
     cout << TAB << STUDENT << i;
-  }
+  } // for
   for (unsigned int i = 0; i < numVendingMachines; i++) {
     cout << TAB << VENDING_MACHINE << i;
-  }
+  } // for
   for (unsigned int i = 0; i < numCouriers; i++) {
     cout << TAB << COURIER << i;
-  }
+  } // for
 
   // Print a row full of delimiters
   cout << endl << DELIMITER;
   for (unsigned int i = 1; i < numActors; i++) {
     cout << TAB << DELIMITER;
-  }
+  } // for
   cout << endl;
-}
+} // Printer::Printer
 
 Printer::~Printer() {
   // When everyone is terminated, print termination delimiter
   cout << FINAL_DELIMITER << endl;
-}
+} // Printer::~Printer
 
 unsigned int Printer::convertToGlobalId(Kind kind, unsigned int lid) {
   switch (kind) {
@@ -62,28 +62,28 @@ unsigned int Printer::convertToGlobalId(Kind kind, unsigned int lid) {
     default: // Kind represents one of single actors (parent, truck, etc.), so just use
              // its enum value
       return kind;
-  }
-}
+  } // switch
+} // Printer::convertToGlobalId
 
 void Printer::print(Kind kind, char state) {
   print(kind, 0, state, NEG_INFINITY, NEG_INFINITY); // Call more general version of print()
-}
+} // Printer::print
 
 void Printer::print(Kind kind, char state, int value1) {
   print(kind, 0, state, value1, NEG_INFINITY); // Call more general version of print()
-}
+} // Printer::print
 
 void Printer::print(Kind kind, char state, int value1, int value2) {
   print(kind, 0, state, value1, value2); // Call more general version of print()
-}
+} // Printer::print
 
 void Printer::print(Kind kind, unsigned int lid, char state) {
   print(kind, lid, state, NEG_INFINITY, NEG_INFINITY); // Call more general version of print()
-}
+} // Printer::print
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1) {
   print(kind, lid, state, value1, NEG_INFINITY); // Call more general version of print()
-}
+} // Printer::print
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1, int value2) {
   unsigned int id = convertToGlobalId(kind, lid);
@@ -94,19 +94,19 @@ void Printer::print(Kind kind, unsigned int lid, char state, int value1, int val
     if (buffer.size()) {
       displayStates();
       buffer.clear();
-    }
+    } // if
     // Display state of id as finished using sspecial function
     displayFinishedState(id);
     return;
-  }
+  } // if
 
   if (buffer.find(id) != buffer.end()) {
     // Some state will be owerriten. Flush the buffer.
     displayStates();
-  }
+  } // if
   buffer[id] = state; // Save the new value in the buffer
   extraValues[id] = make_pair(value1, value2);
-}
+} // Printer::print
 
 void Printer::displayStates() {
   unsigned int previousId = 0;
@@ -114,31 +114,31 @@ void Printer::displayStates() {
     // Print the tabs preceeding the status
     for (size_t i = 0; i < it->first - previousId; i++) {
       cout << TAB;
-    }
+    } // for
     previousId = it->first;
     cout << it->second; // Printthe state
 
     if (extraValues[it->first].first != NEG_INFINITY) {
       // If the id we are printing has an extra value, print it 
       cout << extraValues[it->first].first;
-    }
+    } // if
     if (extraValues[it->first].second != NEG_INFINITY) {
       // If the id we are printing has a second extra value, print it as well
       cout << COMMA << extraValues[it->first].second;
-    }
-  }
+    } // if
+  } // for
   cout << endl;
 
   buffer.clear(); // Flush the buffer after printing
-}
+} // Printer::displayStates
 
 void Printer::displayFinishedState(unsigned int finishedId) {
   for (unsigned int i = 0; i < numActors; i++) {
     if (i) { // Print the tab for every entry, but first
       cout << TAB;
-    }
+    } // if
     // Display different symbol for finished actor and everyone else
     cout << ((i == finishedId) ? FINISHED_ME : FINISHED_OTHER);
-  }
+  } // for
   cout << endl;
-}
+} // Printer::displayFinishedState
