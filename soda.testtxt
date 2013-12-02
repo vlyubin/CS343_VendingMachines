@@ -33,7 +33,7 @@ when encountering abnormal condition. The tests in the code are the following:
 Additionally we can check that no deadlocks or other problems arise. We've made a script that will allow us to
 check some possible input combos. For each combo of input parameters, we generate appropriate config file, and
 run our program with it. If the deadlock will happen, the script will stop in the middle, without printing
-FINISHED message. If asseriton fails, the message will get printed to console.
+FINISHED message. If assertion fails, the message will get printed to console.
 Here's the result of running the tests:
 
 linux028:~/cs343/a6/CS343_A6> cat testscript.sh 
@@ -239,10 +239,10 @@ F       ...     ...     ...     ...     ...     ...     ...     ...     ...     
 ***********************
 
 As you can see, there are no anomalies: students are repeatedly checking different vending
-machines and terminate as soon as they are done (refernce solution does the sanme),
+machines and terminate as soon as they are done (reference solution does the same),
 truck keeps delivering soda, parent keeps providing money and so on.
 
-2) Abnormally expensive soda. soda.config has the same values as in sample, with the exeption of SodaCost, which
+2) Abnormally expensive soda. soda.config has the same values as in sample, with the exception of SodaCost, which
 is now 100. Since funds can only be increased by 5$, this means that students will need a while to get the needed
 funds. Here's a shortened output:
 
@@ -297,7 +297,7 @@ the overall structure of prints is quite similar as well. Hence we can claim tha
 on this testcase.
 
 3) Lots of students. soda.config is the same as in sample, with the exception that the student count is 10 in the
-first sub-test and 50 in the second sub-test. Both executions terminated successfully. Linewise, the counts were
+first sub-test and 50 in the second sub-test. Both executions terminated successfully. Likewise, the counts were
 398 vs 295 and 1692 vs 1791 (OurSolution vs ReferenceSolution). The counts are quite close to each other, which
 again advocates for the correctness of our solution.
 
@@ -388,7 +388,7 @@ D1,3                    U0,397                          R                       
 ***********************
 
 Execution finished successfully without any anomalies. Furthermore, you can see that each delivery
-that truck makes is unsuccessfull as expected.
+that truck makes is unsuccessful as expected.
 
 6) Lastly, let's check what happens when there is only one vending machine (other parameters are the same
 as in sample).
