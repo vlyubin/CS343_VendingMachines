@@ -38,6 +38,8 @@ void WATCardOffice::Courier::main() {
 
 		delete job; // Courier is responsible for deleting the job
 	} // while
+
+	printer.print(Printer::Courier, Finish);
 } // WATCardOffice::Courier::main
 
 WATCardOffice::Courier::Courier(WATCardOffice& office, Printer& printer)
