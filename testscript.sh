@@ -15,9 +15,9 @@
 
 `touch testfile.config`
 
-for SodaCost in `seq 1 3`;
+for SodaCost in `seq 1 6`;
 do
-for NumStudents in `seq 1 4`;
+for NumStudents in `seq 1 5`;
 do
 for MaxPurchases in `seq 1 3`;
 do
