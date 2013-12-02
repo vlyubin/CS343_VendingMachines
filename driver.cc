@@ -44,9 +44,9 @@ void uMain::main() {
 
   ConfigParms configs;
   const char* configFile = argc <= 1 ? DEFAULT_CONFIG_FILE : argv[1];
-  processConfigFile(configFile, configs);
-
   int seed = argc <= 2 ? getpid() : readArgvNumber(argv, 2);
+
+  processConfigFile(configFile, configs);
 
   // Uncomment to use more processors if there is a need.
   // uProcessor p[16] __attribute__(());
