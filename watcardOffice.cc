@@ -11,8 +11,8 @@ WATCardOffice::WATCardOffice(Printer& prt, Bank& bank,
 	
 	// Create numCouriers courier threads
 	couriers = new Courier*[numCouriers];
-	for (unsigned int i = 0; i < numCouriers; ++i) {
-		couriers[i] = new Courier(*this, printer);
+	for (unsigned int id = 0; id < numCouriers; ++id) {
+		couriers[id] = new Courier(*this, printer, id);
 	} // for
 } // WATCardOffice::WATCardOffice
 	

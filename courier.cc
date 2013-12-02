@@ -5,7 +5,7 @@
 #include "watcardOffice.h"
 
 void WATCardOffice::Courier::main() {
-	printer.print(Printer::Courier, Start);
+	printer.print(Printer::Courier, id, (char)Start);
 	while (true) {
 		Job* job = office.requestWork();
 		if (job == KILL_YOURSELF) { // termination condition
@@ -16,7 +16,7 @@ void WATCardOffice::Courier::main() {
 			// job requires the creation of a new watcard.
 			job->args.card = new WATCard();
 		} // if
-		printer.print(Printer::Courier, (char)StartTransfer, job->args.sid,
+		printer.print(Printer::Courier, id, (char)StartTransfer, job->args.sid,
 			job->args.amount);
 
 		// Get money from the bank and deposit it in the watcard.
@@ -25,7 +25,7 @@ void WATCardOffice::Courier::main() {
 		job->args.bank.withdraw(job->args.sid, job->args.amount);
 		job->args.card->deposit(job->args.amount);
 		
-		printer.print(Printer::Courier, (char)CompleteTransfer,
+		printer.print(Printer::Courier, id, (char)CompleteTransfer,
 			job->args.sid, job->args.amount);
 
 		if (randGen(1, 6) == 1) {
@@ -39,9 +39,9 @@ void WATCardOffice::Courier::main() {
 		delete job; // Courier is responsible for deleting the job
 	} // while
 
-	printer.print(Printer::Courier, Finish);
+	printer.print(Printer::Courier, id, (char)Finish);
 } // WATCardOffice::Courier::main
 
-WATCardOffice::Courier::Courier(WATCardOffice& office, Printer& printer)
-	: office(office), printer(printer) {
+WATCardOffice::Courier::Courier(WATCardOffice& office, Printer& printer,
+	unsigned int id): office(office), printer(printer), id(id) {
 } // WATCardOffice::Courier::Courier

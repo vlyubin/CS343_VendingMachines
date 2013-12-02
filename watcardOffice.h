@@ -40,11 +40,12 @@ _Task WATCardOffice {
     _Task Courier {
 			WATCardOffice& office; // Watcard office to get jobs from
 			Printer& printer;      // Print using this printer.
+			const unsigned int id; // Unique id
 			void main();
 			enum state { Start = 'S', StartTransfer = 't', CompleteTransfer = 'T',
 				Finish = 'F'};       // States for printing
 		 public:
-			Courier(WATCardOffice& office, Printer& printer);
+			Courier(WATCardOffice& office, Printer& printer, unsigned int id);
 		}; // Courier            Communicates with bank
 
     void main();
