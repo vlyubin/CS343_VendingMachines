@@ -20,21 +20,15 @@ We correctly handle invalid inputs.
 
 ---------------------------------------------------------------------
 
-The huge part of testing comes from assertions placed in the code, that will force the program to quit
-when encountering abnormal condition. The tests in the code are the following:
+Some of the testing comes from assertions placed in the code that will force the
+program to quit when encountering abnormal conditions.
 
-1) Amount of soda in vending machines always stays valid.
-2) NameServer data remains consistent.
-3) Bottling plant generates valid amounts of soda.
-4) Truck picks up and restocks valid amounts of soda.
-
-// TODO: Add more
-
-Additionally we can check that no deadlocks or other problems arise. We've made a script that will allow us to
-check some possible input combos. For each combo of input parameters, we generate appropriate config file, and
-run our program with it. If the deadlock will happen, the script will stop in the middle, without printing
-FINISHED message. If assertion fails, the message will get printed to console.
-Here's the result of running the tests:
+Additionally we can check that no deadlocks or other problems arise. We've made
+a script that will allow us to check some possible input combinations. For each
+combination of input parameters, we generate an appropriate config file and run
+our program with it. If deadlock happens, the script will stop in the middle
+without printing the FINISHED message. If an assertion fails, the failure
+message will get printed to console.  Here's the result of running the tests:
 
 linux028:~/cs343/a6/CS343_A6> cat testscript.sh 
 #!/bin/bash -e
