@@ -1,15 +1,13 @@
-#include "printer.h"
-
-_Task VendingMachine;
-
 #ifndef NAME_SERVER_H_
 #define NAME_SERVER_H_
 
 _Task VendingMachine;
+_Monitor Printer;
 
 _Task NameServer {
     Printer &printer;
-    unsigned int numVendingMachines, numStudents;
+    const unsigned int numVendingMachines;
+    const unsigned int numStudents;
     VendingMachine** machines;
     unsigned int nextId; // Used to indicate the position in the list where the next machine will go
     unsigned int* studentPosition; // Used to indicate the position of the machine that each student
@@ -26,6 +24,6 @@ _Task NameServer {
     VendingMachine *getMachine(unsigned int id); // Returns a pointer to machine that student with id id
     // should use next
     VendingMachine **getMachineList(); // Return the list of registered machines
-};
+}; // NameServer
 
 #endif // NAME_SERVER_H_

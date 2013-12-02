@@ -1,16 +1,16 @@
-#include "printer.h"
-#include "nameServer.h"
-#include "watcard.h"
-
-#define NUM_FLAVOURS 4
-
 #ifndef VENDING_MACHINE_H_
 #define VENDING_MACHINE_H_
+
+_Monitor Printer;
+class WATCard;
+_Task NameServer;
 
 _Task VendingMachine {
     Printer &printer;
     NameServer &nameServer;
-    unsigned int id, sodaCost, maxStockPerFlavour;
+    const unsigned int id;
+    const unsigned int sodaCost;
+    const unsigned int maxStockPerFlavour;
     unsigned int* soda; // Soda that this VM contains. It has NUM_FLAVOURS entries, representing counts
     // for each flavour
 
@@ -31,6 +31,6 @@ _Task VendingMachine {
     // Getters for private fields of the class
     _Nomutex unsigned int cost();
     _Nomutex unsigned int getId();
-};
+}; // VendingMachine
 
 #endif //VENDING_MACHINE_H_
