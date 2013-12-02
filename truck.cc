@@ -47,14 +47,12 @@ void Truck::main() {
         // We cannot add more than we have, nor can we add more than VM can contain
         unsigned int cansToAdd = min(maxStockPerFlavour - machineInventory[j], cargo[j]);
 
-        assert(cansToAdd >= 0 && cansToAdd <= cargo[j] && "Invalid amount of soda restocked by truck");
+        assert(cansToAdd <= cargo[j] && "Invalid amount of soda restocked by truck");
 
         // Restock cansToAdd cans
         machineInventory[j] += cansToAdd;
         cargo[j] -= cansToAdd;
         totalShipment -= cansToAdd; // Update the shipment amount we have left
-
-        assert(cargo[j] >= 0 && "Invalid amount of soda left in truck");
 
         emptySlotsLeft += maxStockPerFlavour - machineInventory[j];
       } // for

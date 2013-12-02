@@ -1,5 +1,6 @@
 CXX = u++						# compiler
-CXXFLAGS = -g -multi -Wall -Wno-unused-label -Wno-unused-local-typedefs -MMD ${OPT} -DTYPE="${TYPE}" # compiler flags
+SUPPRESS_UPP_WARNINGS = -Wno-unused-label -Wno-unused-local-typedefs -Wno-unused-parameter # warnings from uC++.h
+CXXFLAGS = -g -multi -Werror -Wall -Wextra ${SUPPRESS_UPP_WARNINGS} -MMD ${OPT} -DTYPE="${TYPE}" # compiler flags
 
 OBJECTS = courier.o driver.o bank.o bottlingPlant.o config.o nameServer.o parent.o \
           printer.o student.o truck.o vendingMachine.o watcard.o watcardOffice.o
